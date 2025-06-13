@@ -1,4 +1,8 @@
+/**
+ * Manages all songs, queues and playback operations of the application.
+ */
 public class Playlist {
+    /** maximum number of songs for history and initial queue sizes */
     private static final int MAX_SONGS = 1000;
 
     private Song[][] queues;  // queues[priority][songs]
@@ -8,13 +12,21 @@ public class Playlist {
     private Song[] history;
     private int historySize;
 
+    /**
+     * Creates an empty playlist with six priority queues and an empty history.
+     */
     public Playlist() {
         queues = new Song[6][MAX_SONGS];  // 6 priority levels (0-5)
-        sizes = new int[6];                      // Track sizes for each priority
-        history = new Song[MAX_SONGS];    // History storage
+        sizes = new int[6];               // track sizes for each priority
+        history = new Song[MAX_SONGS];    // history storage
         historySize = 0;
     }
 
+    /**
+     * Adds a song to the queue corresponding to its priority.
+     *
+     * @param song the song to enqueue
+     */
     public void addSong(Song song) {
         int priority = song.getPriority();
         // ensure priority is within valid range before accessing arrays
@@ -34,12 +46,20 @@ public class Playlist {
         }
     }
 
+    /**
+     * Prints all songs that have been played so far in order of playtime.
+     */
     public void history() {
         for (int i = 0; i < historySize; i++) {
             System.out.println(history[i].toListString());
         }
     }
 
+    /**
+     * Returns the song that would currently be played without removing it.
+     *
+     * @return the current song or the next queued song, or {@code null} if none
+     */
     public Song peek() {
         if (currentSong != null && currentSong.getRemainingTime() > 0) {
             return currentSong;
@@ -53,6 +73,12 @@ public class Playlist {
         return null;
     }
 
+    /**
+     * Removes all songs with the given id from the queues and from the current
+     * playback.
+     *
+     * @param id identifier of the song(s) to remove
+     */
     public void removeById(int id) {
         int amountRemoved = 0;
 
@@ -82,6 +108,9 @@ public class Playlist {
         }
     }
 
+    /**
+     * Removes the given song from the head of its priority queue.
+     */
     public void removeFirstFromQueue(Song song) {
         int prio = song.getPriority();
 
@@ -93,6 +122,12 @@ public class Playlist {
         sizes[prio]--;
     }
 
+    /**
+     * Advances playback by the given number of seconds, switching songs as
+     * necessary and moving finished songs to the history.
+     *
+     * @param seconds number of seconds to play
+     */
     public void play(int seconds) {
         while (seconds > 0) {
             if (currentSong == null) {
@@ -120,6 +155,9 @@ public class Playlist {
     }
 
 
+    /**
+     * Stops the current song without adding it to the history.
+     */
     public void skip() {
         if (currentSong != null) {
             currentSong = null;
@@ -127,12 +165,10 @@ public class Playlist {
     }
 
     /**
-     * Adds a song to be played next (highest priority, after current song if playing).
-     * @param song The song to add.
-     */
-    /**
-     * Adds a song to be played next (highest priority, after current song if playing).
-     * @param song The song to add.
+     * Inserts a song at the front of the highest priority queue so it will
+     * play immediately after the current song (if any).
+     *
+     * @param song the song to schedule next
      */
     public void addNext(Song song) {
         int prio = 0;
@@ -150,6 +186,9 @@ public class Playlist {
     }
 
 
+    /**
+     * Doubles the size of the given song array.
+     */
     private Song[] expandArray(Song[] array) {
         Song[] newArray = new Song[array.length * 2];
         System.arraycopy(array, 0, newArray, 0, array.length);
@@ -157,6 +196,10 @@ public class Playlist {
     }
 
 
+    /**
+     * Prints all songs in the playlist ordered by priority, including the
+     * currently playing song if present.
+     */
     public void list() {
         for (int prio = 0; prio < 6; prio++) {
             if (currentSong != null && currentSong.getPriority() == prio) {

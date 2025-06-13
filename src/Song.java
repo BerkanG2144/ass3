@@ -1,3 +1,6 @@
+/**
+ * Simple data holder representing a single track in the playlist.
+ */
 public class Song {
     private final int id;
     private final String artist;
@@ -6,6 +9,9 @@ public class Song {
     private final int priority;
     private int remainingTime;
 
+    /**
+     * Constructs a song with the given properties.
+     */
     public Song(int id, String artist, String title, int length, int priority){
         this.id = id;
         this.artist = artist;
@@ -15,42 +21,58 @@ public class Song {
         this.remainingTime = length;
     }
 
+    /** @return the unique id of this song */
     public int getId() {
         return id;
     }
 
+    /** @return the artist name */
     public String getArtist() {
         return artist;
     }
 
+    /** @return the title of the song */
     public String getTitle() {
         return title;
     }
 
+    /** @return length of the song in seconds */
     public int getLength() {
         return length;
     }
 
+    /** @return priority level from 0 (highest) to 5 */
     public int getPriority() {
         return priority;
     }
 
+    /** @return remaining play time for the current song */
     public int getRemainingTime() {
         return remainingTime;
     }
 
+    /**
+     * Updates the remaining play time of this song.
+     */
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
     }
 
+    /**
+     * Formats this song for output when peeking the current song.
+     */
     public String toPeekString() {
         return String.format("%05d:%s:%s:%d:%d", id, artist, title, length, remainingTime);
     }
 
+    /**
+     * Formats this song for output in lists and history.
+     */
     public String toListString() {
         return String.format("%05d:%s:%s:%d", id, artist, title, length);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -63,6 +85,7 @@ public class Song {
                 title.equals(other.title);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int result = 17;
