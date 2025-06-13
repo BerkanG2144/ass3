@@ -133,7 +133,9 @@ public class Playlist {
     public void addNext(Song song) {
         int prio = 0;
 
-        if (sizes[prio] >= MAX_SONGS) return;
+        if (sizes[prio] == queues[prio].length) {
+            queues[prio] = expandArray(queues[prio]);
+        }
 
         int insertIndex = 0;
 
