@@ -1,5 +1,6 @@
 /**
  * Manages all songs, queues and playback operations of the application.
+ * @author ujnaa
  */
 public class Playlist {
     /** maximum number of songs for history and initial queue sizes */
@@ -26,6 +27,7 @@ public class Playlist {
      * Adds a song to the queue corresponding to its priority.
      *
      * @param song the song to enqueue
+     * @throws IllegalArgumentException if the song has an invalid priority
      */
     public void addSong(Song song) {
         int priority = song.getPriority();
@@ -110,6 +112,7 @@ public class Playlist {
 
     /**
      * Removes the given song from the head of its priority queue.
+     * @param song the song to be removed
      */
     public void removeFirstFromQueue(Song song) {
         int prio = song.getPriority();
@@ -129,7 +132,8 @@ public class Playlist {
      * @param seconds number of seconds to play
      */
     public void play(int seconds) {
-        while (seconds > 0) {
+        int remainingSeconds = seconds;
+        while (remainingSeconds > 0) {
             if (currentSong == null) {
                 for (int prio = 0; prio < 6; prio++) {
                     if (sizes[prio] > 0) {
@@ -138,16 +142,18 @@ public class Playlist {
                         break;
                     }
                 }
-                if (currentSong == null) return;
+                if (currentSong == null) {
+                    return;
+                }
             }
 
             int remaining = currentSong.getRemainingTime();
 
-            if (remaining > seconds) {
-                currentSong.setRemainingTime(remaining - seconds);
-                seconds = 0;
+            if (remaining > remainingSeconds) {
+                currentSong.setRemainingTime(remaining - remainingSeconds);
+                remainingSeconds = 0;
             } else {
-                seconds -= remaining;
+                remainingSeconds -= remaining;
                 addToHistory(currentSong);
                 currentSong = null;
             }
@@ -173,7 +179,9 @@ public class Playlist {
     public void addNext(Song song) {
         int prio = 0;
 
-        if (sizes[prio] >= MAX_SONGS) return;
+        if (sizes[prio] >= MAX_SONGS) {
+            return;
+        }
 
         int insertIndex = 0;
 

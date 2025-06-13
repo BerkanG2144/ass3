@@ -3,6 +3,7 @@ import java.util.regex.Pattern;
 
 /**
  * Handles the "add" command that inserts a song into the playlist.
+ * @author ujnaa
  */
 public class AddCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("add\\s+(\\d+):([^:]+):([^:]+):(\\d+):(\\d+)");

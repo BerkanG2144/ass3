@@ -1,5 +1,6 @@
 /**
  * Handles the "quit" command that ends the application.
+ * @author ujnaa
  */
 public class QuitCommand implements Command {
     @Override

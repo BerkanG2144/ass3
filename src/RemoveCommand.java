@@ -1,5 +1,6 @@
 /**
  * Handles the "remove" command that deletes songs by id.
+ * @author ujnaa
  */
 public class RemoveCommand implements Command {
     @Override

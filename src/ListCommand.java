@@ -1,5 +1,6 @@
 /**
  * Handles the "list" command that prints the playlist.
+ * @author ujnaa
  */
 public class ListCommand implements Command {
     @Override

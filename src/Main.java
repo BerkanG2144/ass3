@@ -1,9 +1,16 @@
 import java.util.Scanner;
 
 /**
- * Entry point of the playlist application.
+ * Entry point of the application. Initializes the playlist and starts
+ * the command processor to handle user input.
+ *
+ * @author ujnaa
  */
-public class Main {
+public final class Main {
+
+    private Main() {
+        //
+    }
     /**
      * Starts the command processor loop.
      *

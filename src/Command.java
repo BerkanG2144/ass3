@@ -1,5 +1,6 @@
 /**
  * Represents a command that can be executed by the playlist application.
+ * @author ujnaa
  */
 public interface Command {
     /**

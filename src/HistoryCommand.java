@@ -1,5 +1,6 @@
 /**
  * Handles the "history" command that prints played songs.
+ * @author ujnaa
  */
 public class HistoryCommand implements Command {
     @Override

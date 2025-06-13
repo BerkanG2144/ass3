@@ -1,5 +1,6 @@
 /**
  * Handles the "skip" command that stops the current song.
+ * @author ujnaa
  */
 public class SkipCommand implements Command {
     @Override

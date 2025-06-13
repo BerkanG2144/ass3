@@ -1,5 +1,8 @@
 /**
  * Simple data holder representing a single track in the playlist.
+ * A song has an ID, artist, title, length, priority and tracks remaining playback time.
+ *
+ * @author ujnaa
  */
 public class Song {
     private final int id;
@@ -11,8 +14,14 @@ public class Song {
 
     /**
      * Constructs a song with the given properties.
+     *
+     * @param id the unique song identifier
+     * @param artist the artist of the song
+     * @param title the title of the song
+     * @param length the duration in seconds
+     * @param priority the priority from 0 (highest) to 5 (lowest)
      */
-    public Song(int id, String artist, String title, int length, int priority){
+    public Song(int id, String artist, String title, int length, int priority) {
         this.id = id;
         this.artist = artist;
         this.title = title;
@@ -21,38 +30,64 @@ public class Song {
         this.remainingTime = length;
     }
 
-    /** @return the unique id of this song */
+    /**
+     * Gets the unique song ID.
+     *
+     * @return the ID
+     */
     public int getId() {
         return id;
     }
 
-    /** @return the artist name */
+    /**
+     * Gets the artist of this song.
+     *
+     * @return the artist
+     */
     public String getArtist() {
         return artist;
     }
 
-    /** @return the title of the song */
+    /**
+     * Gets the title of this song.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
-    /** @return length of the song in seconds */
+    /**
+     * Gets the full length of this song in seconds.
+     *
+     * @return the song length
+     */
     public int getLength() {
         return length;
     }
 
-    /** @return priority level from 0 (highest) to 5 */
+    /**
+     * Gets the priority level of this song.
+     *
+     * @return the priority (0 = highest, 5 = lowest)
+     */
     public int getPriority() {
         return priority;
     }
 
-    /** @return remaining play time for the current song */
+    /**
+     * Gets the remaining time for the song to finish.
+     *
+     * @return remaining playback time
+     */
     public int getRemainingTime() {
         return remainingTime;
     }
 
     /**
      * Updates the remaining play time of this song.
+     *
+     * @param remainingTime new remaining time in seconds
      */
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
@@ -60,32 +95,56 @@ public class Song {
 
     /**
      * Formats this song for output when peeking the current song.
+     *
+     * @return formatted song string with remaining time
      */
     public String toPeekString() {
-        return String.format("%05d:%s:%s:%d:%d", id, artist, title, length, remainingTime);
+        return String.format(
+                "%05d:%s:%s:%d:%d",
+                id,
+                artist,
+                title,
+                length,
+                remainingTime
+        );
     }
 
     /**
      * Formats this song for output in lists and history.
+     *
+     * @return formatted song string without remaining time
      */
     public String toListString() {
         return String.format("%05d:%s:%s:%d", id, artist, title, length);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Checks if this song is equal to another.
+     *
+     * @param obj the object to compare
+     * @return true if song content is identical
+     */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Song)) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Song)) {
+            return false;
+        }
         Song other = (Song) obj;
-        return id == other.id &&
-                length == other.length &&
-                priority == other.priority &&
-                artist.equals(other.artist) &&
-                title.equals(other.title);
+        return id == other.id
+                && length == other.length
+                && priority == other.priority
+                && artist.equals(other.artist)
+                && title.equals(other.title);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Computes the hash code for this song.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode() {
         int result = 17;
@@ -96,6 +155,4 @@ public class Song {
         result = 31 * result + Integer.hashCode(priority);
         return result;
     }
-
-
 }

@@ -3,6 +3,7 @@ import java.util.regex.Pattern;
 
 /**
  * Handles the "next" command that schedules a song as the next track.
+ * @author ujnaa
  */
 public class NextCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("next\\s+(\\d+):([^:]+):([^:]+):(\\d+)");

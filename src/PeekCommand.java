@@ -1,5 +1,6 @@
 /**
  * Handles the "peek" command that prints the currently playing song.
+ * @author ujnaa
  */
 public class PeekCommand implements Command {
     @Override
