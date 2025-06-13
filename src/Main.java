@@ -52,6 +52,8 @@ public class Main {
                 } else {
                     System.out.println("❓ Unknown command.");
                 }
+            } catch (IllegalArgumentException e) {
+                System.out.println("⚠️ " + e.getMessage());
             } catch (Exception e) {
                 System.out.println("⚠️ Error: " + e.getMessage());
             }
