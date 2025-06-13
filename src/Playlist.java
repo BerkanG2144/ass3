@@ -137,13 +137,8 @@ public class Playlist {
 
         int insertIndex = 0;
 
-        // Wenn currentSong mit Prio 0 gerade läuft → insertIndex = 1
-        if (currentSong != null && currentSong.getPriority() == prio) {
-            insertIndex = 1;
-        }
-
-        for (int i = sizes[prio]; i > insertIndex; i--) {
-            queues[prio][i] = queues[prio][i - 1];
+        for (int i = sizes[prio] - 1; i >= insertIndex; i--) {
+            queues[prio][i + 1] = queues[prio][i];
         }
 
         queues[prio][insertIndex] = song;
