@@ -17,6 +17,10 @@ public class Playlist {
 
     public void addSong(Song song) {
         int priority = song.getPriority();
+        // ensure priority is within valid range before accessing arrays
+        if (priority < 0 || priority >= queues.length) {
+            throw new IllegalArgumentException("Invalid priority: " + priority);
+        }
         if (sizes[priority] == queues[priority].length) {
             queues[priority] = expandArray(queues[priority]);
         }
