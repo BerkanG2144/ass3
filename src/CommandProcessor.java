@@ -55,7 +55,7 @@ public class CommandProcessor {
                 if (cmd.matches(input)) {
                     try {
                         cmd.execute(input, playlist);
-                    } catch (Exception e) {
+                    } catch (RuntimeException e) {
                         System.out.println("\u26A0\uFE0F " + e.getMessage());
                     }
                     handled = true;

@@ -16,7 +16,8 @@ public interface Command {
      *
      * @param input the complete input line
      * @param playlist the playlist instance to operate on
-     * @throws Exception if parsing fails or a playlist error occurs
+     * Implementations may throw a {@link RuntimeException} if parsing fails or
+     * a playlist error occurs.
      */
-    void execute(String input, Playlist playlist) throws Exception;
+    void execute(String input, Playlist playlist);
 }
