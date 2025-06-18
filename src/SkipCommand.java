@@ -3,9 +3,10 @@
  * @author ujnaa
  */
 public class SkipCommand implements Command {
+    private static final String COMMAND = "skip";
     @Override
     public boolean matches(String input) {
-        return input.equals("skip");
+        return input.equals(COMMAND);
     }
 
     @Override

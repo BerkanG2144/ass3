@@ -7,6 +7,12 @@ public class Playlist {
     private static final int INITIAL_CAPACITY = 10;
     /** number of priority levels used by the playlist */
     private static final int NUM_PRIORITIES = 6;
+    private static final int DEFAULT_PRIORITY = 0;
+    private static final int NO_TIME_LEFT = 0;
+    private static final String INVALID_PRIORITY_MSG = "Invalid priority: ";
+    private static final int EXPANSION_FACTOR = 2;
+    private static final int INITIAL_INDEX = 0;
+    private static final int SHIFT = 1;
 
     private Song[][] queues;  // queues[priority][songs]
     private int[] sizes;     // sizes[priority] = current queue size
@@ -21,7 +27,7 @@ public class Playlist {
         queues = new Song[NUM_PRIORITIES][INITIAL_CAPACITY];  // 6 priority levels (0-5)
         sizes = new int[NUM_PRIORITIES];                 // track sizes for each priority
         history = new Song[INITIAL_CAPACITY];    // history storage
-        historySize = 0;
+        historySize = INITIAL_INDEX;
     }
 
     /**
@@ -33,8 +39,8 @@ public class Playlist {
     public void addSong(Song song) {
         int priority = song.getPriority();
         // ensure priority is within valid range before accessing arrays
-        if (priority < 0 || priority >= queues.length) {
-            throw new IllegalArgumentException("Invalid priority: " + priority);
+        if (priority < DEFAULT_PRIORITY || priority >= queues.length) {
+            throw new IllegalArgumentException(INVALID_PRIORITY_MSG + priority);
         }
         if (sizes[priority] == queues[priority].length) {
             queues[priority] = expandArray(queues[priority]);
@@ -74,7 +80,7 @@ public class Playlist {
 
         for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             if (sizes[prio] > 0) {
-                return queues[prio][0];
+                return queues[prio][INITIAL_INDEX];
             }
         }
         return null;
@@ -88,7 +94,7 @@ public class Playlist {
      * @return removed amount
      */
     public int removeById(int id) {
-        int amountRemoved = 0;
+        int amountRemoved = INITIAL_INDEX;
 
         if (currentSong != null && currentSong.getId() == id) {
             currentSong = null;
@@ -96,13 +102,13 @@ public class Playlist {
         }
 
         for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
-            int i = 0;
+            int i = INITIAL_INDEX;
             while (i < sizes[prio]) {
                 if (queues[prio][i].getId() == id) {
-                    for (int j = i; j < sizes[prio] - 1; j++) {
-                        queues[prio][j] = queues[prio][j + 1];
+                    for (int j = i; j < sizes[prio] - SHIFT; j++) {
+                        queues[prio][j] = queues[prio][j + SHIFT];
                     }
-                    queues[prio][sizes[prio] - 1] = null;
+                    queues[prio][sizes[prio] - SHIFT] = null;
                     sizes[prio]--;
                     amountRemoved++;
                 } else {
@@ -121,11 +127,10 @@ public class Playlist {
     public void removeFirstFromQueue(Song song) {
         int prio = song.getPriority();
 
-        for (int i = 0; i < sizes[prio] - 1; i++) {
-            queues[prio][i] = queues[prio][i + 1];
+        for (int i = 0; i < sizes[prio] - SHIFT; i++) {
+            queues[prio][i] = queues[prio][i + SHIFT];
         }
-
-        queues[prio][sizes[prio] - 1] = null;
+        queues[prio][sizes[prio] - SHIFT] = null;
         sizes[prio]--;
     }
 
@@ -141,7 +146,7 @@ public class Playlist {
             if (currentSong == null) {
                 for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
                     if (sizes[prio] > 0) {
-                        currentSong = queues[prio][0];
+                        currentSong = queues[prio][INITIAL_INDEX];
                         removeFirstFromQueue(currentSong);
                         break;
                     }
@@ -155,7 +160,7 @@ public class Playlist {
 
             if (remaining > remainingSeconds) {
                 currentSong.setRemainingTime(remaining - remainingSeconds);
-                remainingSeconds = 0;
+                remainingSeconds = NO_TIME_LEFT;
             } else {
                 remainingSeconds -= remaining;
                 addToHistory(currentSong);
@@ -175,7 +180,7 @@ public class Playlist {
 
         for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             if (sizes[prio] > 0) {
-                Song song = queues[prio][0];
+                Song song = queues[prio][INITIAL_INDEX];
                 removeFirstFromQueue(song);
                 break;
             }
@@ -189,16 +194,16 @@ public class Playlist {
      * @param song the song to schedule next
      */
     public void addNext(Song song) {
-        int prio = 0;
+        int prio = DEFAULT_PRIORITY;
 
         if (sizes[prio] == queues[prio].length) {
             queues[prio] = expandArray(queues[prio]);
         }
 
-        int insertIndex = 0;
+        int insertIndex = DEFAULT_PRIORITY;
 
-        for (int i = sizes[prio] - 1; i >= insertIndex; i--) {
-            queues[prio][i + 1] = queues[prio][i];
+        for (int i = sizes[prio] - SHIFT; i >= insertIndex; i--) {
+            queues[prio][i + SHIFT] = queues[prio][i];
         }
 
         queues[prio][insertIndex] = song;
@@ -209,8 +214,9 @@ public class Playlist {
      * Doubles the size of the given song array.
      */
     private Song[] expandArray(Song[] array) {
-        Song[] newArray = new Song[array.length * 2];
-        System.arraycopy(array, 0, newArray, 0, array.length);
+        Song[] newArray = new Song[array.length * EXPANSION_FACTOR];
+        final int startIndex = 0;
+        System.arraycopy(array, startIndex, newArray, startIndex, array.length);
         return newArray;
     }
 

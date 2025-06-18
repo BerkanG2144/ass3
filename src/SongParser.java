@@ -27,16 +27,24 @@ public final class SongParser {
      * @return the resulting {@link Song}
      * @throws IllegalArgumentException if the input does not match the format
      */
+    private static final String INVALID_SONG_FORMAT = "Invalid song format";
+    private static final int GROUP_ID = 1;
+    private static final int GROUP_ARTIST = 2;
+    private static final int GROUP_TITLE = 3;
+    private static final int GROUP_LENGTH = 4;
+    private static final int GROUP_PRIORITY = 5;
+    private static final int DEFAULT_PRIORITY = 0;
+
     public static Song parseWithPriority(String input) {
         Matcher m = WITH_PRIORITY_PATTERN.matcher(input);
         if (!m.matches()) {
-            throw new IllegalArgumentException("Invalid song format");
+            throw new IllegalArgumentException(INVALID_SONG_FORMAT);
         }
-        int id = Integer.parseInt(m.group(1));
-        String artist = m.group(2).trim();
-        String title = m.group(3).trim();
-        int length = Integer.parseInt(m.group(4));
-        int priority = Integer.parseInt(m.group(5));
+        int id = Integer.parseInt(m.group(GROUP_ID));
+        String artist = m.group(GROUP_ARTIST).trim();
+        String title = m.group(GROUP_TITLE).trim();
+        int length = Integer.parseInt(m.group(GROUP_LENGTH));
+        int priority = Integer.parseInt(m.group(GROUP_PRIORITY));
         return new Song(id, artist, title, length, priority);
     }
 
@@ -53,12 +61,12 @@ public final class SongParser {
     public static Song parseWithoutPriority(String input) {
         Matcher m = WITHOUT_PRIORITY_PATTERN.matcher(input);
         if (!m.matches()) {
-            throw new IllegalArgumentException("Invalid song format");
+            throw new IllegalArgumentException(INVALID_SONG_FORMAT);
         }
-        int id = Integer.parseInt(m.group(1));
-        String artist = m.group(2).trim();
-        String title = m.group(3).trim();
-        int length = Integer.parseInt(m.group(4));
-        return new Song(id, artist, title, length, 0);
+        int id = Integer.parseInt(m.group(GROUP_ID));
+        String artist = m.group(GROUP_ARTIST).trim();
+        String title = m.group(GROUP_TITLE).trim();
+        int length = Integer.parseInt(m.group(GROUP_LENGTH));
+        return new Song(id, artist, title, length, DEFAULT_PRIORITY);
     }
 }

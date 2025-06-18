@@ -3,9 +3,10 @@
  * @author ujnaa
  */
 public class HistoryCommand implements Command {
+    private static final String COMMAND = "history";
     @Override
     public boolean matches(String input) {
-        return input.equals("history");
+        return input.equals(COMMAND);
     }
 
     @Override
