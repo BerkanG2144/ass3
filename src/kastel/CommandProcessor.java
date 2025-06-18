@@ -1,3 +1,5 @@
+package kastel;
+
 import java.util.Scanner;
 
 /**
@@ -5,10 +7,10 @@ import java.util.Scanner;
  * @author ujnaa
  */
 public class CommandProcessor {
+    private static final String UNKNOWN_COMMAND_MESSAGE = "Unknown command.";
     private final Playlist playlist;
     private final Scanner scanner;
     private final Command[] commands;
-    private static final String UNKNOWN_COMMAND_MESSAGE = "Unknown command.";
 
     /**
      * Creates a new processor with the given playlist and input scanner.
@@ -41,8 +43,6 @@ public class CommandProcessor {
         };
     }
 
-
-
     /**
      * Starts reading commands from the user until the quit command is issued.
      */
@@ -56,7 +56,7 @@ public class CommandProcessor {
                     try {
                         cmd.execute(input, playlist);
                     } catch (RuntimeException e) {
-                        System.out.println("\u26A0\uFE0F " + e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                     handled = true;
                     if (cmd instanceof QuitCommand) {
@@ -66,7 +66,7 @@ public class CommandProcessor {
                 }
             }
             if (!handled) {
-                System.out.println("\u2753 " + UNKNOWN_COMMAND_MESSAGE);
+                System.out.println(UNKNOWN_COMMAND_MESSAGE);
             }
         }
     }

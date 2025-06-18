@@ -1,9 +1,11 @@
+package kastel;
+
 /**
- * Handles the "history" command that prints played songs.
+ * Handles the "list" command that prints the playlist.
  * @author ujnaa
  */
-public class HistoryCommand implements Command {
-    private static final String COMMAND = "history";
+public class ListCommand implements Command {
+    private static final String COMMAND = "list";
     @Override
     public boolean matches(String input) {
         return input.equals(COMMAND);
@@ -11,7 +13,7 @@ public class HistoryCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        for (String s : playlist.history()) {
+        for (String s : playlist.list()) {
             System.out.println(s);
         }
     }

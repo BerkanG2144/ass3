@@ -1,3 +1,5 @@
+package kastel;
+
 /**
  * Simple data holder representing a single track in the playlist.
  * A song has an ID, artist, title, length, priority and tracks remaining playback time.
@@ -5,12 +7,15 @@
  * @author ujnaa
  */
 public class Song {
+    private static final String PEEK_FORMAT = "%05d:%s:%s:%d:%d";
+    private static final String LIST_FORMAT = "%05d:%s:%s:%d";
     private final int id;
     private final String artist;
     private final String title;
     private final int length;
     private final int priority;
     private int remainingTime;
+
 
     /**
      * Constructs a song with the given properties.
@@ -98,8 +103,6 @@ public class Song {
      *
      * @return formatted song string with remaining time
      */
-    private static final String PEEK_FORMAT = "%05d:%s:%s:%d:%d";
-    private static final String LIST_FORMAT = "%05d:%s:%s:%d";
 
     public String toPeekString() {
         return String.format(

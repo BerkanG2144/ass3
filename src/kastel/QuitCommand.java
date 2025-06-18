@@ -1,9 +1,11 @@
+package kastel;
+
 /**
- * Handles the "skip" command that stops the current song.
+ * Handles the "quit" command that ends the application.
  * @author ujnaa
  */
-public class SkipCommand implements Command {
-    private static final String COMMAND = "skip";
+public class QuitCommand implements Command {
+    private static final String COMMAND = "quit";
     @Override
     public boolean matches(String input) {
         return input.equals(COMMAND);
@@ -11,6 +13,6 @@ public class SkipCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        playlist.skip();
+        //
     }
 }

@@ -1,3 +1,5 @@
+package kastel;
+
 import java.util.Scanner;
 
 /**

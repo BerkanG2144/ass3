@@ -1,3 +1,5 @@
+package kastel;
+
 /**
  * Handles the "remove" command that deletes songs by id.
  * @author ujnaa

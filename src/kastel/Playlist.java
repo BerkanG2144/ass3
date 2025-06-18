@@ -1,3 +1,5 @@
+package kastel;
+
 /**
  * Manages all songs, queues and playback operations of the application.
  * @author ujnaa
@@ -24,9 +26,9 @@ public class Playlist {
      * Creates an empty playlist with six priority queues and an empty history.
      */
     public Playlist() {
-        queues = new Song[NUM_PRIORITIES][INITIAL_CAPACITY];  // 6 priority levels (0-5)
-        sizes = new int[NUM_PRIORITIES];                 // track sizes for each priority
-        history = new Song[INITIAL_CAPACITY];    // history storage
+        queues = new Song[NUM_PRIORITIES][INITIAL_CAPACITY];
+        sizes = new int[NUM_PRIORITIES];
+        history = new Song[INITIAL_CAPACITY];
         historySize = INITIAL_INDEX;
     }
 
@@ -38,7 +40,6 @@ public class Playlist {
      */
     public void addSong(Song song) {
         int priority = song.getPriority();
-        // ensure priority is within valid range before accessing arrays
         if (priority < DEFAULT_PRIORITY || priority >= queues.length) {
             throw new IllegalArgumentException(INVALID_PRIORITY_MSG + priority);
         }

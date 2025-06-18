@@ -1,3 +1,5 @@
+package kastel;
+
 /**
  * Handles the "peek" command that prints the currently playing song.
  * @author ujnaa

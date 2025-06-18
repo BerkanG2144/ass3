@@ -1,3 +1,5 @@
+package kastel;
+
 /**
  * Handles the "play" command that advances playback for a given time.
  * @author ujnaa
