@@ -2,7 +2,6 @@
  * Manages all songs, queues and playback operations of the application.
  * @author ujnaa
  */
-
 public class Playlist {
     /** initial capacity for queues and history */
     private static final int INITIAL_CAPACITY = 10;
@@ -86,6 +85,7 @@ public class Playlist {
      * playback.
      *
      * @param id identifier of the song(s) to remove
+     * @return removed amount
      */
     public int removeById(int id) {
         int amountRemoved = 0;
@@ -164,13 +164,21 @@ public class Playlist {
         }
     }
 
-
     /**
      * Stops the current song without adding it to the history.
      */
     public void skip() {
         if (currentSong != null) {
             currentSong = null;
+            return;
+        }
+
+        for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
+            if (sizes[prio] > 0) {
+                Song song = queues[prio][0];
+                removeFirstFromQueue(song);
+                break;
+            }
         }
     }
 
@@ -197,7 +205,6 @@ public class Playlist {
         sizes[prio]++;
     }
 
-
     /**
      * Doubles the size of the given song array.
      */
@@ -206,7 +213,6 @@ public class Playlist {
         System.arraycopy(array, 0, newArray, 0, array.length);
         return newArray;
     }
-
 
     /**
      * Collects all songs in the playlist ordered by priority, including the
@@ -235,7 +241,5 @@ public class Playlist {
         }
         return result;
     }
-
-
-
 }
+
