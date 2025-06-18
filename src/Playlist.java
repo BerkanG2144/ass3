@@ -9,7 +9,6 @@ public class Playlist {
     private Song[][] queues;  // queues[priority][songs]
     private int[] sizes;     // sizes[priority] = current queue size
     private Song currentSong;
-    private int remainingTime;
     private Song[] history;
     private int historySize;
 
