@@ -10,6 +10,8 @@ public class ListCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        playlist.list();
+        for (String s : playlist.list()) {
+            System.out.println(s);
+        }
     }
 }
