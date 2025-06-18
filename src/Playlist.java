@@ -8,6 +8,8 @@ import java.util.List;
 public class Playlist {
     /** maximum number of songs for history and initial queue sizes */
     private static final int MAX_SONGS = 1000;
+    /** number of priority levels used by the playlist */
+    private static final int NUM_PRIORITIES = 6;
 
     private Song[][] queues;  // queues[priority][songs]
     private int[] sizes;     // sizes[priority] = current queue size
@@ -19,8 +21,8 @@ public class Playlist {
      * Creates an empty playlist with six priority queues and an empty history.
      */
     public Playlist() {
-        queues = new Song[6][MAX_SONGS];  // 6 priority levels (0-5)
-        sizes = new int[6];               // track sizes for each priority
+        queues = new Song[NUM_PRIORITIES][MAX_SONGS];  // 6 priority levels (0-5)
+        sizes = new int[NUM_PRIORITIES];               // track sizes for each priority
         history = new Song[MAX_SONGS];    // history storage
         historySize = 0;
     }
@@ -73,7 +75,7 @@ public class Playlist {
             return currentSong;
         }
 
-        for (int prio = 0; prio < 6; prio++) {
+        for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             if (sizes[prio] > 0) {
                 return queues[prio][0];
             }
@@ -95,7 +97,7 @@ public class Playlist {
             amountRemoved++;
         }
 
-        for (int prio = 0; prio < 6; prio++) {
+        for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             int i = 0;
             while (i < sizes[prio]) {
                 if (queues[prio][i].getId() == id) {
@@ -139,7 +141,7 @@ public class Playlist {
         int remainingSeconds = seconds;
         while (remainingSeconds > 0) {
             if (currentSong == null) {
-                for (int prio = 0; prio < 6; prio++) {
+                for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
                     if (sizes[prio] > 0) {
                         currentSong = queues[prio][0];
                         removeFirstFromQueue(currentSong);
@@ -216,7 +218,7 @@ public class Playlist {
      */
     public List<String> list() {
         List<String> result = new ArrayList<>();
-        for (int prio = 0; prio < 6; prio++) {
+        for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             if (currentSong != null && currentSong.getPriority() == prio) {
                 result.add(currentSong.toListString());
             }
