@@ -1,4 +1,3 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -6,7 +5,7 @@ import java.util.regex.Pattern;
  * @author ujnaa
  */
 public class NextCommand implements Command {
-    private static final Pattern PATTERN = Pattern.compile("next\\s+(\\d+):([^:]+):([^:]+):(\\d+)");
+    private static final Pattern PATTERN = Pattern.compile("next\\s+" + SongParser.WITHOUT_PRIORITY_REGEX);
 
     @Override
     public boolean matches(String input) {
@@ -15,15 +14,11 @@ public class NextCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        Matcher m = PATTERN.matcher(input);
-        if (m.matches()) {
-            int id = Integer.parseInt(m.group(1));
-            String artist = m.group(2).trim();
-            String title = m.group(3).trim();
-            int length = Integer.parseInt(m.group(4));
-            playlist.addNext(new Song(id, artist, title, length, 0));
-        } else {
+        int idx = input.indexOf(' ');
+        if (idx == -1) {
             throw new IllegalArgumentException("Invalid next command format");
         }
+        String songDef = input.substring(idx + 1);
+        playlist.addNext(SongParser.parseWithoutPriority(songDef));
     }
 }

@@ -1,4 +1,3 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -6,7 +5,7 @@ import java.util.regex.Pattern;
  * @author ujnaa
  */
 public class AddCommand implements Command {
-    private static final Pattern PATTERN = Pattern.compile("add\\s+(\\d+):([^:]+):([^:]+):(\\d+):(\\d+)");
+    private static final Pattern PATTERN = Pattern.compile("add\\s+" + SongParser.WITH_PRIORITY_REGEX);
 
     @Override
     public boolean matches(String input) {
@@ -15,16 +14,11 @@ public class AddCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        Matcher m = PATTERN.matcher(input);
-        if (m.matches()) {
-            int id = Integer.parseInt(m.group(1));
-            String artist = m.group(2).trim();
-            String title = m.group(3).trim();
-            int length = Integer.parseInt(m.group(4));
-            int prio = Integer.parseInt(m.group(5));
-            playlist.addSong(new Song(id, artist, title, length, prio));
-        } else {
+        int idx = input.indexOf(' ');
+        if (idx == -1) {
             throw new IllegalArgumentException("Invalid add command format");
         }
+        String songDef = input.substring(idx + 1);
+        playlist.addSong(SongParser.parseWithPriority(songDef));
     }
 }
