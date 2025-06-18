@@ -9,7 +9,8 @@ public class PeekCommand implements Command {
     }
 
     @Override
-    public void execute(String input, Playlist playlist) {
+    public void execute(String input, Playlist playlist)
+            throws IllegalArgumentException, NumberFormatException {
         Song s = playlist.peek();
         if (s != null) {
             System.out.println(s.toPeekString());

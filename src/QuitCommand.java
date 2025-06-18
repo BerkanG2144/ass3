@@ -9,7 +9,8 @@ public class QuitCommand implements Command {
     }
 
     @Override
-    public void execute(String input, Playlist playlist) {
+    public void execute(String input, Playlist playlist)
+            throws IllegalArgumentException, NumberFormatException {
         System.out.println("\uD83D\uDC4B Bye!");
     }
 }

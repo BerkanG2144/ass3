@@ -9,7 +9,8 @@ public class RemoveCommand implements Command {
     }
 
     @Override
-    public void execute(String input, Playlist playlist) {
+    public void execute(String input, Playlist playlist)
+            throws IllegalArgumentException, NumberFormatException {
         int id = Integer.parseInt(input.substring(7).trim());
         playlist.removeById(id);
     }

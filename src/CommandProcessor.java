@@ -64,7 +64,9 @@ public class CommandProcessor {
                 if (cmd.matches(input)) {
                     try {
                         cmd.execute(input, playlist);
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
+                        System.out.println("\u26A0\uFE0F " + e.getMessage());
+                    } catch (IllegalArgumentException e) {
                         System.out.println("\u26A0\uFE0F " + e.getMessage());
                     }
                     handled = true;

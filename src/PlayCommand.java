@@ -9,7 +9,8 @@ public class PlayCommand implements Command {
     }
 
     @Override
-    public void execute(String input, Playlist playlist) {
+    public void execute(String input, Playlist playlist)
+            throws IllegalArgumentException, NumberFormatException {
         int seconds = Integer.parseInt(input.substring(5).trim());
         playlist.play(seconds);
     }

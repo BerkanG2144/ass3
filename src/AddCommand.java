@@ -14,7 +14,8 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public void execute(String input, Playlist playlist) {
+    public void execute(String input, Playlist playlist)
+            throws IllegalArgumentException, NumberFormatException {
         Matcher m = PATTERN.matcher(input);
         if (m.matches()) {
             int id = Integer.parseInt(m.group(1));
