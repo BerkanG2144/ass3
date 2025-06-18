@@ -11,6 +11,9 @@ public class RemoveCommand implements Command {
     @Override
     public void execute(String input, Playlist playlist) {
         int id = Integer.parseInt(input.substring(7).trim());
-        playlist.removeById(id);
+        int removed = playlist.removeById(id);
+        if (removed > 0) {
+            System.out.println("Removed " + removed + " songs.");
+        }
     }
 }

@@ -2,6 +2,9 @@
  * Manages all songs, queues and playback operations of the application.
  * @author ujnaa
  */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Playlist {
     /** maximum number of songs for history and initial queue sizes */
     private static final int MAX_SONGS = 1000;
@@ -49,12 +52,16 @@ public class Playlist {
     }
 
     /**
-     * Prints all songs that have been played so far in order of playtime.
+     * Returns all songs that have been played so far in order of playtime.
+     *
+     * @return list of formatted song strings
      */
-    public void history() {
+    public List<String> history() {
+        List<String> result = new ArrayList<>();
         for (int i = 0; i < historySize; i++) {
-            System.out.println(history[i].toListString());
+            result.add(history[i].toListString());
         }
+        return result;
     }
 
     /**
@@ -81,7 +88,7 @@ public class Playlist {
      *
      * @param id identifier of the song(s) to remove
      */
-    public void removeById(int id) {
+    public int removeById(int id) {
         int amountRemoved = 0;
 
         if (currentSong != null && currentSong.getId() == id) {
@@ -105,9 +112,7 @@ public class Playlist {
             }
         }
 
-        if (amountRemoved > 0) {
-            System.out.println("Removed " + amountRemoved + " songs.");
-        }
+        return amountRemoved;
     }
 
     /**
@@ -205,18 +210,22 @@ public class Playlist {
 
 
     /**
-     * Prints all songs in the playlist ordered by priority, including the
+     * Collects all songs in the playlist ordered by priority, including the
      * currently playing song if present.
+     *
+     * @return list of formatted song strings
      */
-    public void list() {
+    public List<String> list() {
+        List<String> result = new ArrayList<>();
         for (int prio = 0; prio < 6; prio++) {
             if (currentSong != null && currentSong.getPriority() == prio) {
-                System.out.println(currentSong.toListString());
+                result.add(currentSong.toListString());
             }
             for (int i = 0; i < sizes[prio]; i++) {
-                System.out.println(queues[prio][i].toListString());
+                result.add(queues[prio][i].toListString());
             }
         }
+        return result;
     }
 
 

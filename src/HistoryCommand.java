@@ -10,6 +10,8 @@ public class HistoryCommand implements Command {
 
     @Override
     public void execute(String input, Playlist playlist) {
-        playlist.history();
+        for (String s : playlist.history()) {
+            System.out.println(s);
+        }
     }
 }
