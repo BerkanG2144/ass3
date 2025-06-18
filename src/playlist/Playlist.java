@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Manages all songs, queues and playback operations of the application.
  * @author ujnaa

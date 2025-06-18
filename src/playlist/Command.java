@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Represents a command that can be executed by the playlist application.
  * @author ujnaa

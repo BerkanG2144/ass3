@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Handles the "skip" command that stops the current song.
  * @author ujnaa

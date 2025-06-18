@@ -1,3 +1,5 @@
+package playlist;
+
 import java.util.Scanner;
 
 /**

@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Handles the "history" command that prints played songs.
  * @author ujnaa

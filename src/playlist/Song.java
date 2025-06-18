@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Simple data holder representing a single track in the playlist.
  * A song has an ID, artist, title, length, priority and tracks remaining playback time.

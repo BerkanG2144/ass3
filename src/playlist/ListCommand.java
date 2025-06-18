@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Handles the "list" command that prints the playlist.
  * @author ujnaa

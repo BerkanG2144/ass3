@@ -1,3 +1,5 @@
+package playlist;
+
 /**
  * Handles the "quit" command that ends the application.
  * @author ujnaa
