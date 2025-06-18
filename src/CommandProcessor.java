@@ -18,16 +18,7 @@ public class CommandProcessor {
     public CommandProcessor(Playlist playlist, Scanner scanner) {
         this.playlist = playlist;
         this.scanner = scanner;
-        this.commands = initCommands();
-    }
-
-    /**
-     * Initializes the list of supported commands.
-     *
-     * @return array of command instances
-     */
-    private Command[] initCommands() {
-        return createCommands();
+        this.commands = createCommands();
     }
 
     /**
