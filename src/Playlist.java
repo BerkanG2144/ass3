@@ -2,8 +2,6 @@
  * Manages all songs, queues and playback operations of the application.
  * @author ujnaa
  */
-import java.util.ArrayList;
-import java.util.List;
 
 public class Playlist {
     /** maximum number of songs for history and initial queue sizes */
@@ -55,12 +53,12 @@ public class Playlist {
     /**
      * Returns all songs that have been played so far in order of playtime.
      *
-     * @return list of formatted song strings
+     * @return array of formatted song strings
      */
-    public List<String> history() {
-        List<String> result = new ArrayList<>();
+    public String[] history() {
+        String[] result = new String[historySize];
         for (int i = 0; i < historySize; i++) {
-            result.add(history[i].toListString());
+            result[i] = history[i].toListString();
         }
         return result;
     }
@@ -214,16 +212,25 @@ public class Playlist {
      * Collects all songs in the playlist ordered by priority, including the
      * currently playing song if present.
      *
-     * @return list of formatted song strings
+     * @return array of formatted song strings
      */
-    public List<String> list() {
-        List<String> result = new ArrayList<>();
+    public String[] list() {
+        int total = 0;
+        if (currentSong != null) {
+            total++;
+        }
+        for (int i = 0; i < NUM_PRIORITIES; i++) {
+            total += sizes[i];
+        }
+
+        String[] result = new String[total];
+        int index = 0;
         for (int prio = 0; prio < NUM_PRIORITIES; prio++) {
             if (currentSong != null && currentSong.getPriority() == prio) {
-                result.add(currentSong.toListString());
+                result[index++] = currentSong.toListString();
             }
             for (int i = 0; i < sizes[prio]; i++) {
-                result.add(queues[prio][i].toListString());
+                result[index++] = queues[prio][i].toListString();
             }
         }
         return result;
