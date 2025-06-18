@@ -50,8 +50,7 @@ public class CommandProcessor {
         while (running) {
             String input = scanner.nextLine().trim();
             boolean handled = false;
-            for (int i = 0; i < commands.length; i++) {
-                Command cmd = commands[i];
+            for (Command cmd : commands) {
                 if (cmd.matches(input)) {
                     try {
                         cmd.execute(input, playlist);
