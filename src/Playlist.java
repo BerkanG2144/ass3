@@ -4,8 +4,8 @@
  */
 
 public class Playlist {
-    /** maximum number of songs for history and initial queue sizes */
-    private static final int MAX_SONGS = 1000;
+    /** initial capacity for queues and history */
+    private static final int INITIAL_CAPACITY = 10;
     /** number of priority levels used by the playlist */
     private static final int NUM_PRIORITIES = 6;
 
@@ -19,9 +19,9 @@ public class Playlist {
      * Creates an empty playlist with six priority queues and an empty history.
      */
     public Playlist() {
-        queues = new Song[NUM_PRIORITIES][MAX_SONGS];  // 6 priority levels (0-5)
-        sizes = new int[NUM_PRIORITIES];               // track sizes for each priority
-        history = new Song[MAX_SONGS];    // history storage
+        queues = new Song[NUM_PRIORITIES][INITIAL_CAPACITY];  // 6 priority levels (0-5)
+        sizes = new int[NUM_PRIORITIES];                 // track sizes for each priority
+        history = new Song[INITIAL_CAPACITY];    // history storage
         historySize = 0;
     }
 
@@ -44,10 +44,10 @@ public class Playlist {
     }
 
     private void addToHistory(Song song) {
-        if (historySize < MAX_SONGS) {
-            history[historySize] = song;
-            historySize++;
+        if (historySize == history.length) {
+            history = expandArray(history);
         }
+        history[historySize++] = song;
     }
 
     /**
@@ -183,8 +183,8 @@ public class Playlist {
     public void addNext(Song song) {
         int prio = 0;
 
-        if (sizes[prio] >= MAX_SONGS) {
-            return;
+        if (sizes[prio] == queues[prio].length) {
+            queues[prio] = expandArray(queues[prio]);
         }
 
         int insertIndex = 0;
