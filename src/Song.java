@@ -98,9 +98,12 @@ public class Song {
      *
      * @return formatted song string with remaining time
      */
+    private static final String PEEK_FORMAT = "%05d:%s:%s:%d:%d";
+    private static final String LIST_FORMAT = "%05d:%s:%s:%d";
+
     public String toPeekString() {
         return String.format(
-                "%05d:%s:%s:%d:%d",
+                PEEK_FORMAT,
                 id,
                 artist,
                 title,
@@ -115,7 +118,7 @@ public class Song {
      * @return formatted song string without remaining time
      */
     public String toListString() {
-        return String.format("%05d:%s:%s:%d", id, artist, title, length);
+        return String.format(LIST_FORMAT, id, artist, title, length);
     }
 
     /**

@@ -8,6 +8,7 @@ public class CommandProcessor {
     private final Playlist playlist;
     private final Scanner scanner;
     private final Command[] commands;
+    private static final String UNKNOWN_COMMAND_MESSAGE = "Unknown command.";
 
     /**
      * Creates a new processor with the given playlist and input scanner.
@@ -27,17 +28,17 @@ public class CommandProcessor {
      * @return array of commands
      */
     private static Command[] createCommands() {
-        Command[] cmds = new Command[9];
-        cmds[0] = new AddCommand();
-        cmds[1] = new NextCommand();
-        cmds[2] = new PlayCommand();
-        cmds[3] = new RemoveCommand();
-        cmds[4] = new PeekCommand();
-        cmds[5] = new ListCommand();
-        cmds[6] = new SkipCommand();
-        cmds[7] = new HistoryCommand();
-        cmds[8] = new QuitCommand();
-        return cmds;
+        return new Command[]{
+            new AddCommand(),
+            new NextCommand(),
+            new PlayCommand(),
+            new RemoveCommand(),
+            new PeekCommand(),
+            new ListCommand(),
+            new SkipCommand(),
+            new HistoryCommand(),
+            new QuitCommand()
+        };
     }
 
 
@@ -65,7 +66,7 @@ public class CommandProcessor {
                 }
             }
             if (!handled) {
-                System.out.println("\u2753 Unknown command.");
+                System.out.println("\u2753 " + UNKNOWN_COMMAND_MESSAGE);
             }
         }
     }

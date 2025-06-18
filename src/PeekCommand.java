@@ -3,9 +3,10 @@
  * @author ujnaa
  */
 public class PeekCommand implements Command {
+    private static final String COMMAND = "peek";
     @Override
     public boolean matches(String input) {
-        return input.equals("peek");
+        return input.equals(COMMAND);
     }
 
     @Override

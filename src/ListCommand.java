@@ -3,9 +3,10 @@
  * @author ujnaa
  */
 public class ListCommand implements Command {
+    private static final String COMMAND = "list";
     @Override
     public boolean matches(String input) {
-        return input.equals("list");
+        return input.equals(COMMAND);
     }
 
     @Override
